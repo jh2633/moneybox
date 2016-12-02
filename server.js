@@ -1,5 +1,5 @@
 var express    = require('express');
-var mongskin = require('mongoskin')
+var mongoskin = require('mongoskin')
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 
