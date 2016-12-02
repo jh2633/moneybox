@@ -24,4 +24,11 @@ app.get('/transactions/:transactionName', function(req, res){
    })
 })
 
-app.get()
+app.post('/transactions/:transactionName', function(req, res){
+  req.collection.insert(req.body, {}, function(e, results){
+    if (e) return next(e)
+    res.send(results)
+  })
+})
+
+app.listen(3000)
