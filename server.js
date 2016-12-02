@@ -37,8 +37,7 @@ router.route('/transactions')
         transaction.save(function(err) {
             if (err)
                 res.send(err);
-
-            res.json({ message: 'New transaction recorded!' });
+                res.json({ message: 'New transaction recorded!' });
         });
       })
 
@@ -65,20 +64,20 @@ router.route('/transactions/:transactionId')
 
         .put(function(req, res) {
 
-        // use our bear model to find the bear we want
-        Transaction.find({"transactionId": req.params.transactionId}, function(err, bear) {
+          Transaction.findOne({"transactionId": req.params.transactionId}, function(err, transaction) {
 
             if (err)
               res.send(err);
-              Transaction.transactionId = req.body.id;
-              Transaction.transactionDate = req.body.date;
-              Transaction.transactionAmount = req.body.amount;
-              Transaction.description = req.body.description;
-              Transaction.modifiedDate = new Date();
-              Transaction.currencyCode = req.body.currency;
-              Transaction.merchant = req.body.merchat;
 
-              Transaction.save(function(err) {
+              transaction.transactionId = req.body.id;
+              transaction.transactionDate = req.body.date;
+              transaction.transactionAmount = req.body.amount;
+              transaction.description = req.body.description;
+              transaction.modifiedDate = new Date();
+              transaction.currencyCode = req.body.currency;
+              transaction.merchant = req.body.merchat;
+
+              transaction.save(function(err) {
                 if (err)
                     res.send(err);
                     res.json({ message: 'Transaction updated!' });
