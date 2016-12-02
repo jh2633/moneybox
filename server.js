@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var Transaction = require('./app/models/transaction.js');
 
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@ds119578.mlab.com:19578/techtest'); // connect to our database
+mongoose.connect('mongodb://localhost'); // connect to our database
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
