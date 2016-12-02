@@ -1,11 +1,11 @@
-
+require('dotenv').config();
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var Transaction = require('./app/models/transaction.js');
 
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb://localhost'); // connect to our database
+mongoose.connect('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@ds119578.mlab.com:19578/techtest'); // connect to our database
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -22,11 +22,10 @@ router.get('/', function(req, res) {
 });
 router.route('/transactions')
 
-    // create a bear (accessed at POST http://localhost:8080/api/bears)
     .post(function(req, res) {
 
-        var transaction = new Transaction();      // create a new instance of the Bear model
-        transaction.transactionId = req.body.id;  // set the bears name (comes from the request)
+        var transaction = new Transaction();
+        transaction.transactionId = req.body.id;
         transaction.transactionDate = req.body.date;
         transaction.transactionAmount = req.body.amount;
         transaction.description = req.body.description;
@@ -53,7 +52,6 @@ router.route('/transactions')
 
 router.route('/transactions/:transactionId')
 
-        // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
         .get(function(req, res) {
             Transaction.find({"transactionId": req.params.transactionId}, function(err, transaction) {
                 if (err)
@@ -93,11 +91,9 @@ router.route('/transactions/:transactionId')
             res.json({ message: 'Successfully deleted' });
             });
         });
-    
+
 
 app.use('/api', router);
 
-// START THE SERVER
-// =============================================================================
 app.listen(port);
 console.log('Connection on port ' + port);

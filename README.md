@@ -1,4 +1,4 @@
 Pull this repository
 
-Run npm install to install the dependencies in package.json
+Run npm install to install the npm modules listed in package.json
 $npm install
