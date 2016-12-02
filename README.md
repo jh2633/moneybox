@@ -17,10 +17,10 @@ $node server.js
 
 #Requirements
 
-New transaction  - POST /api/transactions
-View single transaction  - GET /api/transactions/:transactionId
-Update transaction  - PUT /api/transactions/:transactionId
-Delete transaction  - DELETE /api/transactions/:transactionId
+New transaction  - POST /api/transactions  
+View single transaction  - GET /api/transactions/:transactionId  
+Update transaction  - PUT /api/transactions/:transactionId  
+Delete transaction  - DELETE /api/transactions/:transactionId  
 All transactions - GET /api/transactions
 
 #Time & Reflection
