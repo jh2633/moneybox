@@ -6,29 +6,32 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var db = mongoskin.db('localhost:8080/test', {safe:true});
+var db = mongoskin.db('mongodb://localhost:27017/test', {safe:true});
 
-app.param('transaction', function(req, res, next, transactionName){
-  req.collection = db.collection(transactionName)
+var port = process.env.PORT || 3000
+
+app.param('collectionName', function(req, res, next, collectionName){
+  req.collection = db.collection(collectionName)
   return next()
 } )
 
-app.get('/', function(req, res){
+app.get('/transactions', function(req, res){
   res.send('Welcome, please select a transaction')
-})
+});
 
-app.get('/transactions/:transactionName', function(req, res){
-  req.collection.find({}, {limit:10, sort: [['_id, -1']]}).toArray(function(e, results){
-    if (e) return next(e)
+app.get('/transactions/:collectionName', function(req, res){
+  req.collection.find({}, {limit:10, sort: [['_id, -1']]}).toArray(function(err, results){
+    if (err) return next(err)
     res.send(results)
    })
-})
+});
 
-app.post('/transactions/:transactionName', function(req, res){
-  req.collection.insert(req.body, {}, function(e, results){
-    if (e) return next(e)
+app.post('/transactions/:collectionName', function(req, res){
+  req.collection.insert(req.body, {}, function(err, results){
+    if (err) return next(err)
     res.send(results)
   })
-})
+});
 
-app.listen(3000)
+app.listen(port);
+console.log('Server running on port '+ port);
