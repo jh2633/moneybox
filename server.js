@@ -83,8 +83,17 @@ router.route('/transactions/:transactionId')
                     res.json({ message: 'Transaction updated!' });
             });
 
+        })
+      })
+
+        .delete(function(req, res) {
+            Transaction.remove({ "transactionId": req.params.transactionId}, function(err, transaction) {
+        if (err)
+            res.send(err);
+            res.json({ message: 'Successfully deleted' });
+            });
         });
-    });
+    
 
 app.use('/api', router);
 
