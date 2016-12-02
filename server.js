@@ -61,7 +61,31 @@ router.route('/transactions/:transactionId')
                     res.send(err);
                 res.json(transaction);
             });
+        })
+
+        .put(function(req, res) {
+
+        // use our bear model to find the bear we want
+        Transaction.find({"transactionId": req.params.transactionId}, function(err, bear) {
+
+            if (err)
+              res.send(err);
+              Transaction.transactionId = req.body.id;
+              Transaction.transactionDate = req.body.date;
+              Transaction.transactionAmount = req.body.amount;
+              Transaction.description = req.body.description;
+              Transaction.modifiedDate = new Date();
+              Transaction.currencyCode = req.body.currency;
+              Transaction.merchant = req.body.merchat;
+
+              Transaction.save(function(err) {
+                if (err)
+                    res.send(err);
+                    res.json({ message: 'Transaction updated!' });
+            });
+
         });
+    });
 
 app.use('/api', router);
 
