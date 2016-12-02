@@ -17,9 +17,14 @@
   },
   "homepage": "https://github.com/jh2633/moneybox#readme",
   "dependencies": {
-      "express": "~4.0.0",
-      "mongoose": "~3.6.13",
-      "body-parser": "~1.0.1"
+    "body-parser": "~1.0.1",
+    "express": "~4.0.0",
+    "mongodb": "^2.2.12",
+    "mongoskin": "^2.1.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^3.2.0",
+    "superagent": "^3.1.0"
   }
-
 }

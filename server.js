@@ -1,20 +1,27 @@
-var express    = require('express');        // call express
+var express    = require('express');
+var mongskin = require('mongoskin')
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port
+var db = mongoskin.db('localhost:8080/test', {safe:true});
 
-var router = express.Router();              // get an instance of the express Router
+app.param('transaction', function(req, res, next, transactionName){
+  req.collection = db.collection(transactionName)
+  return next()
+} )
 
-router.get('/', function(req, res) {
-    res.json({ message: 'Hello world' });
-});
+app.get('/', function(req, res){
+  res.send('Welcome, please select a transaction')
+})
 
+app.get('/transactions/:transactionName', function(req, res){
+  req.collection.find({}, {limit:10, sort: [['_id, -1']]}).toArray(function(e, results){
+    if (e) return next(e)
+    res.send(results)
+   })
+})
 
-app.use('/', router);
-
-app.listen(port);
-console.log('Server running on ' + port);
+app.get()
